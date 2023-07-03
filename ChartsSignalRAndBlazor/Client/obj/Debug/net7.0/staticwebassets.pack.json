@@ -1,0 +1,49 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\aspdotnet_projects2\\ChartsSignalRAndBlazor\\ChartsSignalRAndBlazor\\Client\\bin\\Debug\\net7.0\\wwwroot\\_framework\\blazor.webassembly.js",
+      "PackagePath": "staticwebassets\\_framework\\blazor.webassembly.js"
+    },
+    {
+      "Id": "D:\\aspdotnet_projects2\\ChartsSignalRAndBlazor\\ChartsSignalRAndBlazor\\Client\\obj\\Debug\\net7.0\\build-gz\\4PEn7VQk.gz",
+      "PackagePath": "staticwebassets\\_framework\\blazor.webassembly.js.gz"
+    },
+    {
+      "Id": "D:\\aspdotnet_projects2\\ChartsSignalRAndBlazor\\ChartsSignalRAndBlazor\\Client\\obj\\Debug\\net7.0\\scopedcss\\bundle\\ChartsSignalRAndBlazor.Client.styles.css",
+      "PackagePath": "staticwebassets\\ChartsSignalRAndBlazor.Client.styles.css"
+    },
+    {
+      "Id": "D:\\aspdotnet_projects2\\ChartsSignalRAndBlazor\\ChartsSignalRAndBlazor\\Client\\wwwroot\\css\\app.css",
+      "PackagePath": "staticwebassets\\css\\app.css"
+    },
+    {
+      "Id": "D:\\aspdotnet_projects2\\ChartsSignalRAndBlazor\\ChartsSignalRAndBlazor\\Client\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "D:\\aspdotnet_projects2\\ChartsSignalRAndBlazor\\ChartsSignalRAndBlazor\\Client\\wwwroot\\icon-192.png",
+      "PackagePath": "staticwebassets\\icon-192.png"
+    },
+    {
+      "Id": "D:\\aspdotnet_projects2\\ChartsSignalRAndBlazor\\ChartsSignalRAndBlazor\\Client\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.ChartsSignalRAndBlazor.Client.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.ChartsSignalRAndBlazor.Client.props",
+      "PackagePath": "build\\ChartsSignalRAndBlazor.Client.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.ChartsSignalRAndBlazor.Client.props",
+      "PackagePath": "buildMultiTargeting\\ChartsSignalRAndBlazor.Client.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildTransitive.ChartsSignalRAndBlazor.Client.props",
+      "PackagePath": "buildTransitive\\ChartsSignalRAndBlazor.Client.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

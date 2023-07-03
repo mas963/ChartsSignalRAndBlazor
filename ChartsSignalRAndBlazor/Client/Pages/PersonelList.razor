@@ -1,0 +1,60 @@
+﻿@page "/PersonelList"
+@inject HttpClient client
+@inject IJSRuntime js
+
+<h3>Personeller</h3>
+<div class="form-group">
+    <a class="btn btn-success" href="developer/create"><i class="oi oi-plus"></i> Create New</a>
+</div>
+<br>
+
+@if (personellers == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Adı</th>
+                <th>Soyadı</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var personel in personellers)
+            {
+                <tr>
+                    <td>@personel.Id</td>
+                    <td>@personel.Adi</td>
+                    <td>@personel.Soyadi</td>
+                    <td>
+                        <Button Type="ButtonType.Link" Color="ButtonColor.Success" To="fetchdata">Edit</Button>
+                        <Button Color="ButtonColor.Danger" @onclick="@(() => Delete(Convert.ToInt32(personel.Id)))">Delete</Button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    Personeller[] personellers { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        personellers = await client.GetFromJsonAsync<Personeller[]>("api/Personel");
+    }
+
+    async Task Delete(int personelId)
+    {
+        var personel = personellers.First(x => x.Id == personelId);
+        if (await js.InvokeAsync<bool>("confirm", $"{personel.Adi} adlı personeli silmek istiyor musunuz?"))
+        {
+            await client.DeleteAsync($"api/Personel/{personelId}");
+            await OnInitializedAsync();
+        }
+    }
+}

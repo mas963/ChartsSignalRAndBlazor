@@ -1,0 +1,106 @@
+﻿@page "/ChartsExample"
+@using ChartsSignalRAndBlazor.Shared.DTO;
+@using Microsoft.AspNetCore.SignalR.Client;
+@using BlazorBootstrap.Extensions;
+@using ChartsSignalRAndBlazor.Shared;
+@using Color = System.Drawing.Color;
+
+<LineChart @ref="lineChart" Width="800" />
+
+@code {
+    private LineChart lineChart;
+    private HubConnection hubConnection;
+    private ChartData chartData;
+    private LineChartOptions chartOptions;
+    Random random = new Random();
+    public List<ChartDto> Datas = new List<ChartDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await StartHubConnection();
+
+        chartData = new ChartData
+            {
+                Labels = new List<string> { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},
+                Datasets = new List<IChartDataset>()
+            };
+
+        chartOptions = new LineChartOptions
+            {
+                Responsive = true,
+                Interaction = new Interaction { Mode = InteractionMode.Index }
+            };
+
+        Console.WriteLine("Datas: " + Datas); // Datas listesinin boyutunu kontrol etmek için
+
+        //foreach (var item in Datas)
+        //{
+        //    chartData.Datasets.Add(GetLineChartDataset(item.Label, item.Data));
+        //}
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await lineChart.UpdateAsync(chartData, chartOptions);
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+
+    private LineChartDataset GetLineChartDataset(string Line, List<double> Data)
+    {
+        var c = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
+        // random color
+
+        Console.WriteLine($"Line Chart: Color Name: {c.Name}, HEX: {c.ToHexString()}, RGB: {c.ToRgbString()}, IsNamedColor: {c.IsNamedColor}");
+
+        return new LineChartDataset()
+            {
+                Label = Line,
+                Data = Data,
+                //BackgroundColor = new List<string> { c.ToRgbString() },
+                //BorderColor = new List<string> { c.ToRgbString() },
+                BorderWidth = new List<double> { 2 },
+                HoverBorderWidth = new List<double> { 4 },
+                //PointBackgroundColor = new List<string> { c.ToRgbString() },
+                PointRadius = new List<int> { 0 }, // hide points
+                PointHoverRadius = new List<int> { 4 },
+            };
+    }
+
+    private async Task StartHubConnection()
+    {
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl("https://localhost:7219/satishub")
+            .Build();
+        await hubConnection.StartAsync();
+        if (hubConnection.State == HubConnectionState.Connected)
+        {
+            Console.WriteLine("connection started");
+            AddTransferChartDataListener();
+        }
+    }
+
+    private void AddTransferChartDataListener()
+    {
+        hubConnection.On<List<ChartDto>>("receiveMessage", (data) =>
+        {
+            foreach (var item in data)
+            {
+                Console.WriteLine($"Label: {item.Label}");
+            }
+
+            Datas = data;
+            chartData.Datasets.Clear();
+            foreach (var item in Datas)
+            {
+                chartData.Datasets.Add(GetLineChartDataset(item.Label, item.Data));
+            }
+            StateHasChanged();
+        });
+    }
+
+    public void Dispose()
+    {
+        hubConnection.DisposeAsync();
+    }
+}
